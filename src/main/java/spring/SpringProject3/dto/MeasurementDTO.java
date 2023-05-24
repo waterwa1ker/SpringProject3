@@ -1,22 +1,15 @@
-package spring.SpringProject3.models;
+package spring.SpringProject3.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-import java.io.Serializable;
 
-
-@Entity
-@Table(name = "measurement")
-public class Measurement implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+public class MeasurementDTO {
 
     @Column(name = "value")
     @Min(value = -100, message = "Value should be greater than -100")
@@ -28,25 +21,8 @@ public class Measurement implements Serializable {
     private boolean isRaining;
 
     @ManyToOne
-    @JoinColumn(name = "sensor_id", referencedColumnName = "id", nullable = false)
     @NotNull(message = "Sensor should not be empty")
-    private Sensor sensor;
-
-    public Measurement() {
-    }
-
-    public Measurement(float value, boolean isRaining) {
-        this.value = value;
-        this.isRaining = isRaining;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private SensorDTO sensorDTO;
 
     public float getValue() {
         return value;
@@ -64,11 +40,20 @@ public class Measurement implements Serializable {
         isRaining = raining;
     }
 
-    public Sensor getSensor() {
-        return sensor;
+    public SensorDTO getSensorDTO() {
+        return sensorDTO;
     }
 
-    public void setSensor(Sensor sensor) {
-        this.sensor = sensor;
+    public void setSensorDTO(SensorDTO sensorDTO) {
+        this.sensorDTO = sensorDTO;
+    }
+
+    @Override
+    public String toString() {
+        return "MeasurementDTO{" +
+                "value=" + value +
+                ", isRaining=" + isRaining +
+                ", sensorDTO=" + sensorDTO +
+                '}';
     }
 }
